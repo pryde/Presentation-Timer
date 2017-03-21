@@ -22,6 +22,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let theme = ThemeManager.currentTheme()
         ThemeManager.applyTheme(theme: theme)
         */
+        
+        // Create PresentationList
+        let presentationList = PresentationList()
+        
+        // Access MainViewController and set its presentationList
+        let navViewController = window!.rootViewController as! UINavigationController
+        let mainViewController = navViewController.topViewController as! MainViewController
+        mainViewController.presentationList = presentationList
+        
         return true
     }
 

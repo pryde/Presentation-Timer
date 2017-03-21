@@ -15,6 +15,8 @@ class SetPresentationViewController: UIViewController, UITableViewDataSource, UI
     var presentationTime: TimeInterval = 0
     var sections: [Section] = []
     var section: Section!
+    // This field used only for testing
+    var totalPresentations = 0
     
     @IBOutlet var datePicker: UIDatePicker!
     @IBOutlet var tableView: UITableView!
@@ -31,9 +33,15 @@ class SetPresentationViewController: UIViewController, UITableViewDataSource, UI
         if segue.identifier == "done" {
             presentationTime = (datePicker?.countDownDuration)!
             
+            let presentation = Presentation(title: "Presentation \(totalPresentations + 1)", duration: presentationTime, sections: sections)
+            
             let mainViewController = segue.destination as! MainViewController
             
+            mainViewController.presentationList.createPresentation(presentation: presentation)
             mainViewController.presentationLength = presentationTime
+            mainViewController.sections = sections
+            
+            totalPresentations += 1
         }
     }
     
@@ -79,6 +87,28 @@ class SetPresentationViewController: UIViewController, UITableViewDataSource, UI
         if let index = sections.index(of: section) {
             let indexPath = NSIndexPath(row: index, section: 0)
             tableView.insertRows(at: [indexPath as IndexPath], with: .automatic)
+        }
+    }
+    
+    // MARK: check sum of section times against presentationTime
+    //       returns 0 if section times = presentationTime
+    //               1 if section times > presentationTime
+    //               -1 if section times < presentationTime
+    func sectionsMatchPresentation() -> Int {
+        var sectionSum = 0
+        
+        for section in sections {
+            sectionSum += Int(section.sectionDuration)
+        }
+        
+        if (sectionSum == Int(presentationTime)) {
+            return 0
+        }
+        else if (sectionSum > (Int(presentationTime))) {
+            return 1
+        }
+        else {
+            return -1
         }
     }
 }

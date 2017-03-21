@@ -17,7 +17,17 @@ class Section: Equatable {
         sectionTitle = title
         sectionDuration = duration
         
-        durationString = "\(min) min. \(sec) sec."
+        var minString = min
+        var secString = sec
+        
+        if (min.characters.count < 2) {
+            minString = "0\(min)"
+        }
+        if (sec.characters.count < 2) {
+            secString = "0\(sec)"
+        }
+        
+        durationString = "\(minString):\(secString)"
     }
     
     func convertToMinSec(duration: TimeInterval) -> String {
