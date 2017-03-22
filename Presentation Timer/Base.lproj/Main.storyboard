@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -335,21 +336,29 @@
                                     <rect key="frame" x="0.0" y="0.0" width="342" height="44"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Presentation Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCV-X6-5qh">
-                                            <rect key="frame" x="8" y="11" width="153" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Duration" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kki-tR-9W7">
+                                            <rect key="frame" x="197" y="11" width="145" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="145" id="Dzm-iy-pN8"/>
+                                            </constraints>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Duration" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kki-tR-9W7">
-                                            <rect key="frame" x="189" y="11" width="145" height="21"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Presentation Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCV-X6-5qh">
+                                            <rect key="frame" x="16" y="12" width="173" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Kki-tR-9W7" firstAttribute="centerY" secondItem="aCf-Oo-9Sw" secondAttribute="centerY" id="6pt-A5-XIm"/>
+                                        <constraint firstItem="Kki-tR-9W7" firstAttribute="leading" secondItem="QCV-X6-5qh" secondAttribute="trailing" constant="8" id="BOB-KI-Rqv"/>
+                                        <constraint firstItem="Kki-tR-9W7" firstAttribute="baseline" secondItem="QCV-X6-5qh" secondAttribute="baseline" constant="-1" id="C8D-GV-eLk"/>
+                                        <constraint firstItem="Kki-tR-9W7" firstAttribute="trailing" secondItem="aCf-Oo-9Sw" secondAttribute="trailingMargin" constant="8" id="TYa-cm-m2Q"/>
+                                        <constraint firstItem="QCV-X6-5qh" firstAttribute="leading" secondItem="aCf-Oo-9Sw" secondAttribute="leadingMargin" constant="8" id="jIE-g0-RK8"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <gestureRecognizers/>
                                 <connections>
@@ -401,7 +410,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7z-db-05Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1590" y="148"/>
+            <point key="canvasLocation" x="1589.5999999999999" y="147.97601199400302"/>
         </scene>
         <!--Add Section View Controller-->
         <scene sceneID="Kuf-fC-b9f">

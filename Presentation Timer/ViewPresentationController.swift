@@ -11,6 +11,13 @@ import UIKit
 class ViewPresentationController: UITableViewController {
     var presentationList: PresentationList!
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let insets = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        tableView.contentInset = insets
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         return presentationList.presentations.count
     }

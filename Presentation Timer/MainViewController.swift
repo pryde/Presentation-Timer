@@ -50,7 +50,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         
         animateInset()
         
-        //animateTimer()
+        animateTimer()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -256,28 +256,30 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         NSLog("You selected cell number: \(indexPath.row)!")
         
-        let presentation = presentationList.presentations[indexPath.section - 1]
-        
-        if (presentationList.presentations[indexPath.section - 1].isExpanded == false) {
-            presentationList.presentations[indexPath.section - 1].isExpanded = true
+        if (indexPath.section > 0) {
+            let presentation = presentationList.presentations[indexPath.section - 1]
             
-            expandCell(presentation: presentation, indexPath: indexPath)
-        }
-        else {
-            collapseCell(presentation: presentation, indexPath: indexPath)
+            if (presentationList.presentations[indexPath.section - 1].isExpanded == false) {
+                presentationList.presentations[indexPath.section - 1].isExpanded = true
+                
+                expandCell(presentation: presentation, indexPath: indexPath)
+            }
+            else {
+                collapseCell(presentation: presentation, indexPath: indexPath)
+                
+                presentationList.presentations[indexPath.section - 1].isExpanded = false
+            }
             
-            presentationList.presentations[indexPath.section - 1].isExpanded = false
+            if (presentation.sections.count > 0) {
+                sectionLabel.text = presentation.sections[0].durationString
+            }
+            else {
+                sectionLabel.text = presentation.durationString
+            }
+            
+            selectedPresentation = presentation
+            populateLabels()
         }
-        
-        if (presentation.sections.count > 0) {
-            sectionLabel.text = presentation.sections[0].durationString
-        }
-        else {
-            sectionLabel.text = presentation.durationString
-        }
-        
-        selectedPresentation = presentation
-        populateLabels()
         
     }
     
