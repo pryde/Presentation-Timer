@@ -176,7 +176,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             for _ in 0 ... 2 {
                 AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
             }
-            self.clearTimer()
+            //self.clearTimer()
             print("Timer Completed")
         }
     }
@@ -196,6 +196,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         else if (countdown! >= Int(currSectionDuration)) {
             currSection += 1
             currSectionDuration += (selectedPresentation?.sections[currSection].sectionDuration)!
+            AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
         }
     }
     
@@ -266,6 +267,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             collapseCell(presentation: presentation, indexPath: indexPath)
             
             presentationList.presentations[indexPath.section - 1].isExpanded = false
+        }
+        
+        if (presentation.sections.count > 0) {
+            sectionLabel.text = presentation.sections[0].durationString
+        }
+        else {
+            sectionLabel.text = presentation.durationString
         }
         
         selectedPresentation = presentation

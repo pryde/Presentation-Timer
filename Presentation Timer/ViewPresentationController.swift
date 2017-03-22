@@ -49,7 +49,7 @@ class ViewPresentationController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        NSLog("You selected cell number: \(indexPath.row)!")
+        NSLog("You selected cell number at \(indexPath.section), \(indexPath.row)!")
         
         let presentation = presentationList.presentations[indexPath.section]
         
@@ -66,12 +66,28 @@ class ViewPresentationController: UITableViewController {
         
     }
     
+    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        presentationList.moveItemAtIndex(fromIndex: sourceIndexPath.section, toIndex: destinationIndexPath.section)
+        NSLog("Old row: \(sourceIndexPath.section) New row: \(destinationIndexPath.section)")
+    }
+    
     func expandCell(presentation: Presentation, indexPath: IndexPath) {
         for index in 0 ..< presentation.sections.count {
             NSLog("Inserting cell \(index + 1)")
             presentation.sectionsDisplayed += 1
             let newIndexPath = NSIndexPath(row: index + 1, section: indexPath.section)
             tableView.insertRows(at: [newIndexPath as IndexPath], with: .top)
+        }
+    }
+    
+    @IBAction func toggleEditingMode(sender: UIBarButtonItem) {
+        if isEditing {
+            sender.title = "Edit"
+            setEditing(false, animated: true)
+        }
+        else {
+            sender.title = "Done"
+            setEditing(true, animated: true)
         }
     }
     

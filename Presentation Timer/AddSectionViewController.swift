@@ -8,13 +8,15 @@
 
 import UIKit
 
-class AddSectionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class AddSectionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
     @IBOutlet var minPicker: UIPickerView!
     @IBOutlet var secPicker: UIPickerView!
     @IBOutlet var titleField: UITextField!
     
     let elements = Array(0 ... 60)
     var section: Section!
+    var sections: [Section]!
+    var isEditingSection: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,17 @@ class AddSectionViewController: UIViewController, UIPickerViewDelegate, UIPicker
         secPicker.delegate = self
         minPicker.dataSource = self
         secPicker.dataSource = self
+        titleField.delegate = self
+    }
+    
+    // MARK: - Dismiss keyboard on down swipe
+    @IBAction func backgroundSwipe(_ sender: UISwipeGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -38,17 +51,37 @@ class AddSectionViewController: UIViewController, UIPickerViewDelegate, UIPicker
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if (segue.identifier == "done") {
-            let min = minPicker.selectedRow(inComponent: 0)
-            let sec = secPicker.selectedRow(inComponent: 0)
+        if (segue.identifier == "unwindToSetPresentation") {
             
-            if let title = titleField.text {
-                section = Section(title: title, duration: TimeInterval((min * 60) + sec), min: String(min), sec: String(sec))
+            if (isEditingSection) {
+                NSLog("Error occurs past line 57")
+                NSLog("\(section.sectionTitle)")
+                let sectionIndex = sections.index(of: section)
+                NSLog("\(sectionIndex)")
+                
+                let min = minPicker.selectedRow(inComponent: 0)
+                let sec = secPicker.selectedRow(inComponent: 0)
+                
+                if let title = titleField.text {
+                    section = Section(title: title, duration: TimeInterval((min * 60) + sec), min: String(min), sec: String(sec))
+                }
+                
+                let setView = segue.destination as! SetPresentationViewController
+                setView.sections[sectionIndex!] = section
+                setView.section = section
             }
-            
-            let setView = segue.destination as! SetPresentationViewController
-            setView.sections.append(section)
-            setView.section = section
+            else {
+                let min = minPicker.selectedRow(inComponent: 0)
+                let sec = secPicker.selectedRow(inComponent: 0)
+                
+                if let title = titleField.text {
+                    section = Section(title: title, duration: TimeInterval((min * 60) + sec), min: String(min), sec: String(sec))
+                }
+                
+                let setView = segue.destination as! SetPresentationViewController
+                setView.sections.append(section)
+                setView.section = section
+            }
         }
     }
     

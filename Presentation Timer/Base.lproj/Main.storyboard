@@ -179,7 +179,7 @@
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="XIc-4C-wyd">
                             <color key="tintColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="DxO-1D-hCZ" kind="show" id="uAJ-I8-eO5"/>
+                                <segue destination="DxO-1D-hCZ" kind="presentation" id="uAJ-I8-eO5"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="R4v-qD-Dom">
@@ -212,7 +212,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mov-ne-Gcm">
-                                <rect key="frame" x="0.0" y="64" width="375" height="275"/>
+                                <rect key="frame" x="0.0" y="110" width="375" height="229"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <date key="date" timeIntervalSinceReferenceDate="511570800.46139699">
                                     <!--2017-03-18 23:00:00 +0000-->
@@ -227,7 +227,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="cIt-5Z-d8P" id="Ikb-aH-XpZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Section Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yMJ-50-Xod">
@@ -255,7 +255,7 @@
                                         <rect key="frame" x="0.0" y="72" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VrD-qy-VnF" id="tWY-mS-yMo">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rR-wc-iaw">
@@ -276,15 +276,26 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Presentation Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="iYe-lO-o8U">
+                                <rect key="frame" x="16" y="72" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="IHI-fy-iOf" appends="YES" id="jYH-XS-4ha"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="kq3-U4-cvN">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="qb1-Jv-xxI">
                             <color key="tintColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <segue destination="Fed-bv-Dv4" kind="unwind" identifier="done" unwindAction="UnwindToMainWithUnwindSegue:" id="Q3c-7L-ISh"/>
+                                <action selector="doneButtonTapped:" destination="3Hq-IN-3Ds" id="3SE-6R-di9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -292,10 +303,18 @@
                     <connections>
                         <outlet property="datePicker" destination="Mov-ne-Gcm" id="D7d-lp-UBZ"/>
                         <outlet property="tableView" destination="SWk-A9-oZd" id="YR2-Zm-KUY"/>
+                        <outlet property="titleField" destination="iYe-lO-o8U" id="U7a-AO-bmR"/>
+                        <segue destination="Fed-bv-Dv4" kind="unwind" identifier="unwindToMain" unwindAction="UnwindToMainWithUnwindSegue:" id="lVm-Ch-ckF"/>
+                        <segue destination="20Q-Pe-S2D" kind="show" identifier="editSection" id="Sqb-SJ-Zp7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8gV-NO-vnN" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="Fed-bv-Dv4" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer direction="down" id="IHI-fy-iOf">
+                    <connections>
+                        <action selector="backgroundSwipe:" destination="3Hq-IN-3Ds" id="FlT-JI-j8V"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1589.5999999999999" y="-546.47676161919048"/>
         </scene>
@@ -307,6 +326,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PresentationCell" id="as4-dH-8Hh" customClass="PresentationCell" customModule="Presentation_Timer" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="44"/>
@@ -331,6 +351,7 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <gestureRecognizers/>
                                 <connections>
                                     <outlet property="durationLabel" destination="Kki-tR-9W7" id="Mg5-Ff-x6K"/>
                                     <outlet property="titleLabel" destination="QCV-X6-5qh" id="3o1-J1-Sra"/>
@@ -370,6 +391,13 @@
                             <outlet property="delegate" destination="d7Z-mM-2I5" id="Wf4-hB-zkN"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="FNy-QV-kiR">
+                        <barButtonItem key="rightBarButtonItem" title="Edit" id="EE6-eD-PEw">
+                            <connections>
+                                <action selector="toggleEditingModeWithSender:" destination="d7Z-mM-2I5" id="skP-xd-Iur"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k7z-db-05Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -392,7 +420,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="words" returnKeyType="done"/>
                             </textField>
                             <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jv-v8-Ptj">
                                 <rect key="frame" x="16" y="225" width="81" height="216"/>
@@ -418,11 +446,15 @@
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="mOk-Cu-Gjc" appends="YES" id="hBd-Fq-JVb"/>
+                        </connections>
                     </view>
                     <navigationItem key="navigationItem" id="UNB-N2-yrn">
                         <barButtonItem key="rightBarButtonItem" systemItem="done" id="QfY-e8-HbA">
                             <connections>
-                                <segue destination="dK6-mJ-J4l" kind="unwind" identifier="done" unwindAction="UnwindToSetPresentationWithUnwindSegue:" id="7eL-id-xQI"/>
+                                <segue destination="dK6-mJ-J4l" kind="unwind" identifier="unwindToSetPresentation" unwindAction="UnwindToSetPresentationWithUnwindSegue:" id="7eL-id-xQI"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -434,6 +466,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pVd-pz-CLm" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="dK6-mJ-J4l" userLabel="Exit" sceneMemberID="exit"/>
+                <swipeGestureRecognizer direction="down" id="mOk-Cu-Gjc">
+                    <connections>
+                        <action selector="backgroundSwipe:" destination="20Q-Pe-S2D" id="8eA-ID-286"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2400.8000000000002" y="-546.47676161919048"/>
         </scene>
@@ -457,7 +494,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="8BK-gi-uHx"/>
+        <segue reference="Sqb-SJ-Zp7"/>
         <segue reference="v5B-wg-xYD"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.88235294119999996" green="0.34509803919999998" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
