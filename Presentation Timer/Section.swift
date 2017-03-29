@@ -8,10 +8,24 @@
 
 import UIKit
 
-class Section: Equatable {
+class Section: NSObject, NSCoding {
     var sectionTitle: String
     var durationString: String
     var sectionDuration: TimeInterval
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(sectionTitle, forKey: "sectionTitle")
+        aCoder.encode(durationString, forKey: "sectionDurationString")
+        aCoder.encode(Int(sectionDuration), forKey: "sectionDuration")
+        //aCoder.encode(sectionDuration, forKey: "sectionDuration")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        sectionTitle = aDecoder.decodeObject(forKey: "sectionTitle") as! String
+        durationString = aDecoder.decodeObject(forKey: "sectionDurationString") as! String
+        sectionDuration = TimeInterval(aDecoder.decodeCInt(forKey: "sectionDuration"))
+        //sectionDuration = aDecoder.decodeObject(forKey: "sectionDuration") as! TimeInterval
+    }
     
     init(title: String, duration: TimeInterval, min: String, sec: String) {
         sectionTitle = title

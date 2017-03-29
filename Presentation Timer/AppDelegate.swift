@@ -12,19 +12,24 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    let presentationList = PresentationList()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        // MARK: Theme functions, implement later
-        /*
-        let theme = ThemeManager.currentTheme()
-        ThemeManager.applyTheme(theme: theme)
-        */
+        ThemeManager.theme.themeApplication()
+        
+        // set up your background color view
+        let colorView = UIView()
+        colorView.backgroundColor = UIColor.darkGray
+        
+        // use UITableViewCell.appearance() to configure
+        // the default appearance of all UITableViewCells in your app
+        UITableViewCell.appearance().selectedBackgroundView = colorView
         
         // Create PresentationList
-        let presentationList = PresentationList()
+        //let presentationList = PresentationList()
         
         // Access MainViewController and set its presentationList
         let navViewController = window!.rootViewController as! UINavigationController
@@ -42,6 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        let success = presentationList.saveChanges()
+        if success {
+            NSLog("Saved presentations")
+        }
+        else {
+            NSLog("Did not save presentation")
+        }
+        
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

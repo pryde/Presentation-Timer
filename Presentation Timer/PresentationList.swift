@@ -10,10 +10,26 @@ import UIKit
 
 class PresentationList {
     var presentations = [Presentation]()
+    let presentationArchiveURL: NSURL = {
+        let documentsDirectories = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let documentDirectory = documentsDirectories.first!
+        return documentDirectory.appendingPathComponent("presentations.archive") as NSURL
+    }()
+    
+    init() {
+        if let archivedPresentations = NSKeyedUnarchiver.unarchiveObject(withFile: presentationArchiveURL.path!) as? [Presentation] {
+            presentations += archivedPresentations
+        }
+    }
     
     func createPresentation(presentation: Presentation) -> Presentation {
         presentations.append(presentation)
         return presentation
+    }
+    
+    func saveChanges() -> Bool {
+        NSLog("Saving items to \(presentationArchiveURL.path!)")
+        return NSKeyedArchiver.archiveRootObject(presentations, toFile: presentationArchiveURL.path!)
     }
     
     func moveItemAtIndex(fromIndex: Int, toIndex: Int) {

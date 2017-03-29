@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Presentation: Equatable {
+class Presentation: NSObject, NSCoding {
     var sections: [Section]
     var title: String
     var duration: TimeInterval
@@ -20,8 +20,24 @@ class Presentation: Equatable {
         self.title = title
         self.duration = duration
         self.sections = sections
-        
+        super.init()
         self.durationString = intervalToString(interval: duration)
+    }
+    
+    func encode(with aCoder: NSCoder) {
+        aCoder.encode(title, forKey: "title")
+        aCoder.encode(Int(duration), forKey: "duration")
+        //aCoder.encode(duration, forKey: "duration")
+        aCoder.encode(durationString, forKey:"durationString")
+        aCoder.encode(sections, forKey: "sections")
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        title = aDecoder.decodeObject(forKey: "title") as! String
+        duration = TimeInterval(aDecoder.decodeCInt(forKey: "duration"))
+        //duration = aDecoder.decodeObject(forKey: "duration") as! TimeInterval
+        durationString = aDecoder.decodeObject(forKey: "durationString") as! String
+        sections = aDecoder.decodeObject(forKey: "sections") as! [Section]
     }
     
     func intervalToString(interval: TimeInterval) -> String {

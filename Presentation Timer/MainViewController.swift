@@ -6,15 +6,10 @@
 //  Copyright © 2017 Chase Bussey. All rights reserved.
 //
 
-// TODO: Implement UITableView DataSource and Delegate -- done
-//       Populate tableview -- done
-//       Outer circle ui element
+// TODO:
 //       Alllll the fucking settings
-//       Data model updates:
-//          Presentation List
-//              each presentation should store its own sections -- done
-//              should persist
-//              view all presentations element of tableview -- done
+//       Dark theme
+//       Background execution
 
 import UIKit
 import AudioToolbox
@@ -33,30 +28,58 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
     @IBOutlet var sectionLabel: UILabel!
     @IBOutlet var startButton: UIButton?
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var circularProgressView: KDCircularProgress!
     
     // MARK: UIViewController functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        /*
-        for i in 0 ..< self.view.subviews.count {
-            self.view.subviews[i].backgroundColor = UIColor.darkGray
-        }
-        self.view.backgroundColor = UIColor.darkGray
-        */
+       
+                
         tableView.delegate = self
         tableView.dataSource = self
         
         tableView.reloadData()
         
-        animateInset()
+        if (presentationList.presentations.count > 0) {
+            selectedPresentation = presentationList.presentations[0]
+            
+             presentationLabel.text = selectedPresentation?.intervalToString(interval: TimeInterval((Int((selectedPresentation?.duration)!))))
+            
+            if ((selectedPresentation?.sections.count)! > 0) {
+                sectionLabel.text = selectedPresentation?.intervalToString(interval: (selectedPresentation?.sections[0].sectionDuration)!)
+            }
+        }
+        let indexPath = IndexPath(row: 0, section: 1)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
         
-        animateTimer()
+        themeViews()
+    }
+    
+    func themeViews() {
+        let theme = ThemeManager.theme
+        
+        view.backgroundColor = theme.colors.BackgroundPrimary
+        tableView.backgroundColor = theme.colors.BackgroundPrimary
+        circularProgressView.trackColor = UIColor.darkGray
+        
+        theme.themeButton(button: startButton!)
+        
+        theme.themeLabel(label: presentationLabel, textStyle: .Title)
+        theme.themeLabel(label: sectionLabel, textStyle: .Subtitle)
+        
+        let nav = self.navigationController?.navigationBar
+        
+        nav?.barStyle = UIBarStyle.black
+        nav?.tintColor = theme.colors.Primary
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         tableView.reloadData()
+        
+        let indexPath = IndexPath(row: 0, section: 1)
+        tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
     }
     
     // MARK: Pass data through show segue
@@ -68,116 +91,28 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         }
     }
     
-    // MARK: Display inset circle: called on viewDidLoad -- does not work, don't know why
-    func animateInset() {
-        let Pop = self.view.subviews[1]
-        
-        let circle = Pop
-        
-        
-        //var insetCircle = CAShapeLayer();
-        
-        // Initializes circlePath using an inscribed oval in circle.bounds
-        //let circlePath = UIBezierPath(ovalIn: (circle.bounds).insetBy(dx: 5/2.0, dy: 5/2.0))
-        // Initilizes circlePath using circle arc with radius 150, startAngle 0, endAngle 360 doesn't work?
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: circle.bounds.midX, y: circle.bounds.midY), radius: 150, startAngle: CGFloat(-M_PI_2), endAngle: CGFloat((-M_PI_2) + (M_PI * 2)), clockwise: true)
-        
-        let insetCircle = CAShapeLayer();
-        insetCircle.path = circlePath.cgPath
-        insetCircle.strokeColor = UIColor.black.cgColor
-        insetCircle.fillColor = UIColor.clear.cgColor
-        insetCircle.lineWidth = 9.0
-        
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = 0
-        animation.toValue = 1.0
-        animation.duration = 1
-        animation.fillMode = kCAFillModeForwards
-        animation.isRemovedOnCompletion = false
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        
-        insetCircle.add(animation, forKey: "ani")
-    }
- 
-    // MARK: Start timer function
-    func animateTimer() {
-        let Pop = self.view.subviews[1]
-        
-        let circle = Pop
-        
-        
-        let progressCircle = CAShapeLayer();
-        
-        // Initializes circlePath using an inscribed oval in circle.bounds
-        //let circlePath = UIBezierPath(ovalIn: (circle.bounds).insetBy(dx: 5/2.0, dy: 5/2.0))
-        // Initilizes circlePath using circle arc with radius 150, startAngle 0, endAngle 360 doesn't work?
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: circle.bounds.midX, y: circle.bounds.midY), radius: 150, startAngle: CGFloat(-M_PI_2), endAngle: CGFloat((-M_PI_2) + (M_PI * 2)), clockwise: true)
-        
-        //progressCircle = CAShapeLayer ()
-        progressCircle.path = circlePath.cgPath
-        progressCircle.strokeColor = UIColor.orange.cgColor
-        progressCircle.fillColor = UIColor.clear.cgColor
-        progressCircle.lineWidth = 5.0
-        
-        circle.layer.addSublayer(progressCircle)
-        
-        
-        let animation = CABasicAnimation(keyPath: "strokeEnd")
-        animation.fromValue = 0
-        animation.toValue = 1.0
-        animation.duration = presentationLength
-        animation.fillMode = kCAFillModeForwards
-        animation.isRemovedOnCompletion = false
-        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
-        
-        progressCircle.add(animation, forKey: "ani")
-    }
-    
-    func clearTimer() {
-        let Pop = self.view.subviews[1]
-        
-        let circle = Pop
-        
-        var progressCircle = CAShapeLayer();
-        
-        // Initializes circlePath using an inscribed oval in circle.bounds
-        //let circlePath = UIBezierPath(ovalIn: (circle.bounds).insetBy(dx: 5/2.0, dy: 5/2.0))
-        // Initilizes circlePath using circle arc with radius 150, startAngle 0, endAngle 360 doesn't work?
-        let circlePath = UIBezierPath(arcCenter: CGPoint(x: circle.bounds.midX, y: circle.bounds.midY), radius: 150, startAngle: CGFloat(-M_PI / 2.0), endAngle: CGFloat((3 * M_PI) * 2.0), clockwise: true)
-        
-        progressCircle = CAShapeLayer ()
-        progressCircle.path = circlePath.cgPath
-        progressCircle.strokeColor = UIColor.white.cgColor
-        progressCircle.fillColor = UIColor.clear.cgColor
-        progressCircle.lineWidth = 5.0
-        
-        circle.layer.addSublayer(progressCircle)
-    }
-    
     // MARK: Start button press
     @IBAction func startTimer(sender: Any?) {
-        clearTimer()
-        animateTimer()
- 
-        countdown = 0
-        
-        if ((selectedPresentation?.sections.count)! > 0) {
-            currSectionDuration = (selectedPresentation?.sections[0].sectionDuration)!
+        if selectedPresentation != nil {
+            NSLog("\(presentationLength)")
+     
+            circularProgressView.animate(fromAngle: 0, toAngle: 360, duration: (selectedPresentation?.duration)!, completion: nil)
+            
+            countdown = 0
+            
+            if ((selectedPresentation?.sections.count)! > 0) {
+                currSectionDuration = (selectedPresentation?.sections[0].sectionDuration)!
+            }
+            else {
+                currSectionDuration = (selectedPresentation?.duration)!
+            }
+            
+            labelUpdateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateLabel), userInfo: nil, repeats: true)
         }
         else {
-            currSectionDuration = (selectedPresentation?.duration)!
-        }
-        
-        labelUpdateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(updateLabel), userInfo: nil, repeats: true)
-        
-        
-        // This one works though
-        _ = Timer.scheduledTimer(withTimeInterval: presentationLength, repeats: false) {_ in
-            for _ in 0 ... 2 {
-                AudioServicesPlayAlertSound(kSystemSoundID_Vibrate)
-            }
-            //self.clearTimer()
-            print("Timer Completed")
+            let alert = UIAlertController(title: "Sorry!", message: "No presentation has been selected.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -230,8 +165,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
         // Get a new or recycled cell
         var cell: UITableViewCell
         
+        let theme = ThemeManager.theme
+        
         if (indexPath.section == 0) {
             cell = tableView.dequeueReusableCell(withIdentifier: "ViewCell", for: indexPath) as! ViewPresentationsCell
+            
+            cell.backgroundColor = theme.colors.BackgroundPrimary
+            theme.themeButton(button: (cell as! ViewPresentationsCell).viewButton!)
         }
         else if (indexPath.section > 0 && indexPath.row == 0){
             cell = tableView.dequeueReusableCell(withIdentifier: "PresentationCell", for: indexPath) as! PresentationCell
@@ -240,6 +180,10 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             (cell as! PresentationCell).titleLabel.text = presentation.title
             (cell as! PresentationCell).durationLabel.text = presentation.durationString
+            (cell as! PresentationCell).backgroundColor = theme.colors.BackgroundPrimary
+            
+            theme.themeLabel(label: (cell as! PresentationCell).titleLabel, textStyle: .Subtitle)
+            theme.themeLabel(label: (cell as! PresentationCell).durationLabel, textStyle: .Body)
         }
         else {
             cell = tableView.dequeueReusableCell(withIdentifier: "SectionCell", for: indexPath) as! SectionCell
@@ -248,7 +192,13 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             
             (cell as! SectionCell).titleLabel.text = section.sectionTitle
             (cell as! SectionCell).durationLabel.text = section.durationString
+            (cell as! SectionCell).backgroundColor = theme.colors.BackgroundPrimary
+            
+            theme.themeLabel(label: (cell as! SectionCell).titleLabel, textStyle: .Body)
+            theme.themeLabel(label: (cell as! SectionCell).durationLabel, textStyle: .Body)
         }
+        
+        //cell.backgroundColor = Theme.backgroundColor
         
         return cell
     }
@@ -278,6 +228,7 @@ class MainViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
             
             selectedPresentation = presentation
+            presentationLength = (selectedPresentation?.duration)!
             populateLabels()
         }
         

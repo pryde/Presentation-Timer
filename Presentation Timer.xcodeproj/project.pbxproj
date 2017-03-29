@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AB3D01FF1E885E550003D284 /* KDCircularProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB3D01FE1E885E550003D284 /* KDCircularProgress.swift */; };
 		AB5851661E74A9E9008B227E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5851651E74A9E9008B227E /* AppDelegate.swift */; };
 		AB5851681E74A9E9008B227E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB5851671E74A9E9008B227E /* ViewController.swift */; };
 		AB58516B1E74A9E9008B227E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AB5851691E74A9E9008B227E /* Main.storyboard */; };
@@ -46,6 +47,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AB3D01FE1E885E550003D284 /* KDCircularProgress.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KDCircularProgress.swift; sourceTree = "<group>"; };
 		AB5851621E74A9E9008B227E /* Presentation Timer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Presentation Timer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB5851651E74A9E9008B227E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		AB5851671E74A9E9008B227E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				AB5851A91E7F0911008B227E /* ViewPresentationsCell.swift */,
 				AB5851AB1E7F1588008B227E /* PresentationCell.swift */,
 				AB5851AD1E7F50B4008B227E /* ViewPresentationController.swift */,
+				AB3D01FE1E885E550003D284 /* KDCircularProgress.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -320,6 +323,7 @@
 				AB5851A61E7EFF27008B227E /* Presentation.swift in Sources */,
 				AB58519A1E7E3BC5008B227E /* Theme.swift in Sources */,
 				AB58519C1E7E4F3F008B227E /* SectionCell.swift in Sources */,
+				AB3D01FF1E885E550003D284 /* KDCircularProgress.swift in Sources */,
 				AB5851AC1E7F1588008B227E /* PresentationCell.swift in Sources */,
 				AB5851981E7E0223008B227E /* SetPresentationViewController.swift in Sources */,
 				AB5851A81E7F0296008B227E /* PresentationList.swift in Sources */,
@@ -576,6 +580,7 @@
 				AB58518C1E74A9E9008B227E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AB58518D1E74A9E9008B227E /* Build configuration list for PBXNativeTarget "Presentation TimerTests" */ = {
 			isa = XCConfigurationList;
@@ -584,6 +589,7 @@
 				AB58518F1E74A9E9008B227E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AB5851901E74A9E9008B227E /* Build configuration list for PBXNativeTarget "Presentation TimerUITests" */ = {
 			isa = XCConfigurationList;
@@ -592,6 +598,7 @@
 				AB5851921E74A9E9008B227E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
